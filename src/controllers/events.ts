@@ -31,3 +31,29 @@ export const addEvent: RequestHandler = async (req: Request, res: Response) => {
 
     res.json({ error: 'Ocorreu um erro' });
 }
+
+export const updateEvent: RequestHandler = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updateEventSchema = z.object({
+        status: z.boolean().optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        grouped: z.boolean().optional()
+    });
+
+    const body = updateEventSchema.safeParse(req.body);
+    if (!body.success) return res.json({ error: 'Dados inválidos' });
+
+    const updatedEvent = await events.update(parseInt(id), body.data);
+    if (updatedEvent) {
+        /*if(updatedEvent.status) {
+            // TODO: Fazer o sorteio
+        } else {
+            //TODO: Limpar o sorteio
+        }*/
+
+        return res.status(201).json({ event: updatedEvent });
+    }
+
+    res.json({ error: 'Ocorreu um erro' });
+}
