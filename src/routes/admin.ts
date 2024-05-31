@@ -10,5 +10,6 @@ router.get('/ping', Auth.validate, (req: Request, res: Response) => res.json({ p
 
 router.get('/events', Auth.validate, Events.getAll);
 router.get('/events/:id', Auth.validate, Events.getEvent);
+router.post('/events', Auth.validate, Events.addEvent);
 
 export default router;
