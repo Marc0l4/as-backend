@@ -27,3 +27,11 @@ export const add = async (data: GroupsCreateData) => {
         return await prisma.eventGroup.create({ data });
     } catch (err) { return false; }
 }
+
+type UpdateFilters = { id: number; id_event: number };
+type GroupsUpdateData = Prisma.Args<typeof prisma.eventGroup, 'update'>['data'];
+export const update = async (filters: UpdateFilters, data: GroupsUpdateData) => {
+    try {
+        return await prisma.eventGroup.update({ where: filters, data });
+    } catch (err) { return false; }
+}
