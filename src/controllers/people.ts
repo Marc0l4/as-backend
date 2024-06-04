@@ -13,3 +13,16 @@ export const getAll: RequestHandler = async (req: Request, res: Response) => {
 
     res.json({ error: 'Ocorreu um erro' });
 }
+
+export const getPerson: RequestHandler = async (req: Request, res: Response) => {
+    const { id, id_event, id_group } = req.params;
+
+    const personItem = await people.getOne({
+        id: parseInt(id),
+        id_event: parseInt(id_event),
+        id_group: parseInt(id_group)
+    });
+    if (personItem) return res.json({ person: personItem });
+
+    res.json({ error: 'Ocorreu um erro' });
+}
