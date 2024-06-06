@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import https from 'https';
 import http from 'http';
+import fs from 'fs';
 
 import adminRoutes from './routes/admin';
 import siteRoutes from './routes/site';
@@ -28,8 +29,13 @@ const runServer = (port: Number, server: http.Server) => {
 
 const regularServer = http.createServer(app);
 if (process.env.NODE_ENV === 'production') {
-    // TODO: configurar SSl
-    // TODO: rodar server na 80 e na 443
+    const options = {
+        key: fs.readFileSync(process.env.SSL_KEY as string),
+        cert: fs.readFileSync(process.env.SSL_CERT as string)
+    }
+    const secServer = https.createServer(options, app);
+    runServer(80, regularServer);
+    runServer(443, secServer);
 } else {
     const serverPort: number = process.env.PORT ? parseInt(process.env.PORT) : 9000;
     runServer(serverPort, regularServer);
