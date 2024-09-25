@@ -1,8 +1,5 @@
-export const encryptMatch = (id: number): string => {
+export const encryptMatch = (id: number): string => `${process.env.DEFAULT_TOKEN}${id}${process.env.DEFAULT_TOKEN}`;
 
-
-    return `${process.env.DEFAULT_TOKEN}${id}${process.env.DEFAULT_TOKEN}`;
-}
 
 export const decryptMatch = (match: string): number => {
     let idString: string = match

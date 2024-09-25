@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
-    "build": "tsc",
+    "build": "tsup src",
+    "dev": "tsx watch --env-file .env src/server.ts",
     "start": "node build/server.js",
     "migrate:dev": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy"
@@ -27,6 +27,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.1",
+    "tup": "^0.0.0",
     "zod": "^3.23.8"
   }
 }
