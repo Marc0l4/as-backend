@@ -21,22 +21,6 @@ app.all('*', requestIntercepter);
 app.use('/admin', adminRoutes);
 app.use('/', siteRoutes);
 
-const runServer = (port: Number, server: http.Server) => {
-    server.listen(port, () => {
-        console.log(`Running at PORT ${port}`);
-    });
-}
-
-const regularServer = http.createServer(app);
-if (process.env.NODE_ENV === 'production') {
-    const options = {
-        key: fs.readFileSync(process.env.SSL_KEY as string),
-        cert: fs.readFileSync(process.env.SSL_CERT as string)
-    }
-    const secServer = https.createServer(options, app);
-    runServer(80, regularServer);
-    runServer(443, secServer);
-} else {
-    const serverPort: number = process.env.PORT ? parseInt(process.env.PORT) : 9000;
-    runServer(serverPort, regularServer);
-}
+app.listen(process.env.PORT, () => {
+    console.log(`Rodando no endereço: http://localhost:${process.env.PORT}`);
+});
